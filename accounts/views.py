@@ -34,3 +34,21 @@ def login_user(request):
             login(request, user)
             return redirect('post:home')
     return render(request, 'accounts/login.html')
+
+
+@login_required
+def logout_user(request):
+    logout(request)
+    return redirect('post:home')
+
+
+@login_required
+def user_profile(request, pk):
+    users = User.objects.exclude(pk=request.user.pk)
+    posts = Post.objects.filter(poster__pk=pk).order_by('-created_at')
+    user = Profile.objects.get(user__id=request.user.pk)
+    followers = user.followers.all()
+    following = user.following.all()
+    user_suggestions = users.exclude(
+        id__in=following).exclude(id__in=followers)
+    return render(request, 'accounts/profile.html', {'posts': posts, 'users': user_suggestions})
