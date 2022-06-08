@@ -94,3 +94,13 @@ def unfollow_user(request, pk):
         user__pk=request.user.pk).following.remove(to_unfollow)
     to_unfollow.profile.followers.remove(request.user)
     return redirect(reverse('accounts:profile', kwargs={'pk': request.user.pk}))
+
+
+@login_required
+def search_user(request):
+    q = request.GET.get('q')
+    results = []
+    if q and q != '':
+        results = User.objects.filter(Q(username__contains=q) | Q(
+            first_name__contains=q) | Q(last_name__contains=q))
+    return render(request, "posts/search.html", {'users': results})
