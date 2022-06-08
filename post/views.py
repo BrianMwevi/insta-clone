@@ -85,3 +85,12 @@ def follow_user(request, pk):
         user__pk=request.user.pk).following.add(to_follow)
     to_follow.profile.followers.add(request.user)
     return redirect('post:home')
+
+
+@login_required
+def unfollow_user(request, pk):
+    to_unfollow = User.objects.get(pk=pk)
+    Profile.objects.get(
+        user__pk=request.user.pk).following.remove(to_unfollow)
+    to_unfollow.profile.followers.remove(request.user)
+    return redirect(reverse('accounts:profile', kwargs={'pk': request.user.pk}))
