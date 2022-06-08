@@ -1,0 +1,43 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="postComments{{post.id}}"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="postComments{{post.id}}Title"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>
+          {{post.comments.all.count}}
+          Comment{{post.comments.all.count|pluralize}}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body bg-white">
+        {% for comment in post.comments.all %}
+        <div class="d-flex mt-2">
+          <img
+            src="{{comment.user.profile.profile_pic.url}}"
+            alt="{{comment.user}}"
+            class="img-fluid nav-profile-img"
+          />
+          <p class="my-auto ml-2">
+            <span class="badge badge-dark">{{comment.user.username}}</span>
+            <span><small>{{comment.comment}}</small></span>
+          </p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
