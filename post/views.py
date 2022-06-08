@@ -32,8 +32,25 @@ def create_post(request):
             form.save_m2m()
             return redirect('post:home')
         # TODO: Handle POST form errors properly
-        print("form is invalid")
-        print(form.errors)
     else:
         form = PostForm()
     return render(request, 'posts/create.html', {'form': form})
+
+
+@login_required
+def create_comment(request):
+    if request.method == 'POST':
+        post_id = request.POST.get('postId')
+        raw_comment = request.POST.get('comment')
+        if raw_comment and post_id:
+            post = Post.objects.get(id=post_id)
+            if post:
+                comment = Comment.objects.create(
+                    comment=raw_comment, post=post, user=request.user)
+                post.comments.add(comment)
+                post.save()
+                return HttpResponse(comment)
+
+        # TODO: Handle COMMENT form errors properly
+        return HttpResponseBadRequest("Invalid Data")
+    return HttpResponseBadRequest()
