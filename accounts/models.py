@@ -16,5 +16,11 @@ class Profile(models.Model):
     following = models.ManyToManyField(
         User, related_name='following', blank=True)
 
+    @receiver(post_save, sender=User)
+    def update_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+        instance.profile.save()
+
     def __str__(self):
         return self.user.username
