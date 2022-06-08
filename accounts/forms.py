@@ -20,3 +20,9 @@ class SignupForm(UserCreationForm):
         except forms.ValidationError as error:
             self.add_error('password1', error)
         return password1
+
+
+class LoginForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'password')
