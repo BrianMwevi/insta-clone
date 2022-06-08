@@ -1,0 +1,81 @@
+{% for post in posts %}
+<div class="card my-3">
+  <a class="nav-link" href="{% url 'accounts:profile' post.poster.pk %}">
+    <div class="card-title pt-1">
+      <img
+        class="feeds-profile-img"
+        src="{{post.poster.profile_pic.url}}"
+        alt="Post title"
+      />
+      <small class="text-muted"><strong>{{post.poster}}</strong></small>
+      <small class="float-right mt-1">
+        <i class="fas fa-ellipsis-h text-muted"></i>
+      </small>
+    </div>
+  </a>
+  <div class="card-body img-card p-0">
+    <i class="like-heart fas fa-heart text-white"></i>
+    <img
+      class="img-fluid post-image"
+      src="{{post.image.url}}"
+      alt="{{post.image.name}}"
+      id="like{{post.id}}"
+    />
+  </div>
+  <div class="card-footer bg-white">
+    <div class="footer-icons">
+      {% if request.user in post.likes.all %}
+      <i
+        class="dislike fas fa-heart text-danger mx-2"
+        id="dislike{{post.id}}"
+      ></i>
+      {% else %}
+      <a href=""><i class="far fa-heart text-dark mx-2"></i></a>
+      {% endif %}
+
+      <a href=""><i class="far fa-comment text-dark mx-2"></i></a>
+      <a href=""><i class="far fa-paper-plane text-dark mx-2"></i></a>
+      <a href="#" class="float-right"
+        ><i class="fas fa-bookmark text-dark"></i
+      ></a>
+    </div>
+    <div class="footer-text">
+      <p class="my-2"><strong>{{post.likes.count}} likes</strong></p>
+      <p class="my-2">
+        <strong>{{post.hash_tag}} &nbsp;</strong>{{post.captions}}
+        <button class="btn btn-sm bg-transparent p-0">
+          <span class="text-muted">more</span>
+        </button>
+      </p>
+      <p
+        class="btn p-0 text-muted"
+        data-toggle="modal"
+        data-target="#postComments{{post.id}}"
+      >
+        View all {{post.comments.all.count}}
+        comment{{post.comments.all.count|pluralize}}
+      </p>
+      {% if post.comments.all %}    
+        {% block comments %}
+          {% include "posts/comments_list.html" %}
+        {% endblock %}
+      {% endif %}
+      <p class="text-muted my-1"><small>{{post.created_at}}</small></p>
+    </div>
+    <div class="comment-form--container">
+      <form class="form-inline comment-form" id="commentForm{{post.id}}">
+        {% csrf_token %}
+        <input
+          type="text"
+          name="comment"
+          class="form-control col-10"
+          placeholder="Add a comment..."
+        />
+        <div class="invalid-feedback mb-2">The comment is too short...</div>
+        <input class="btn bg-transparent" type="submit" value="Post" />
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endfor %}
