@@ -48,9 +48,19 @@ def create_comment(request):
                 comment = Comment.objects.create(
                     comment=raw_comment, post=post, user=request.user)
                 post.comments.add(comment)
-                post.save()
                 return HttpResponse(comment)
 
         # TODO: Handle COMMENT form errors properly
         return HttpResponseBadRequest("Invalid Data")
+    return HttpResponseBadRequest()
+
+
+@login_required
+def add_to_likes(request):
+    if request.method == 'POST':
+        post_id = request.POST.get('id')
+        if post_id is not None:
+            post = Post.objects.get(id=post_id)
+            post.likes.add(request.user.id)
+            return HttpResponse({"post": post})
     return HttpResponseBadRequest()
