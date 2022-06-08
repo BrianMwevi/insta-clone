@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 mx-auto">
+      {% if users %}
+      {% include "accounts/user_suggestions.html" %}
+      {% else %}
+      <h4 class="ml-5 mt-5">No Results Found. Try again.</h4>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
