@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 mx-auto">
+      <div class="card">
+        <div class="cart-title">
+          <h5 class="text-center">Create Post</h5>
+        </div>
+        <div class="card-body">
+          <p>Drag photos and vides here</p>
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <input
+                type="file"
+                name="image"
+                required
+                class="form-control form-control-sm bg-info"
+              />
+            </div>
+            <div class="form-group">
+              <textarea
+                name="captions"
+                class="form-control"
+                placeholder="Write a caption..."
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-sm">Share Post</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
