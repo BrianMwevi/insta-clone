@@ -76,3 +76,12 @@ def remove_like(request):
             post.save()
             return HttpResponse({"post": post})
     return HttpResponseBadRequest()
+
+
+@login_required
+def follow_user(request, pk):
+    to_follow = User.objects.get(pk=pk)
+    Profile.objects.get(
+        user__pk=request.user.pk).following.add(to_follow)
+    to_follow.profile.followers.add(request.user)
+    return redirect('post:home')
