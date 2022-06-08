@@ -1,0 +1,41 @@
+{% extends "base.html" %}    
+{% load static %}
+{% block content %}
+<!-- User Post Start -->
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-5 px-lg-3 px-sm-1">
+        {% include "posts/list.html" %}
+      </div>
+      <!-- User Post End -->
+
+      <!-- Home Account Details Start -->
+      <div class="d-none d-lg-block col-lg-4 px-lg-3 px-sm-1">
+        <div class="d-flex">
+          <a href="{% url 'accounts:profile' request.user.pk %}">
+            <img
+            class="account-profile-img"
+            src="{{request.user.profile.profile_pic.url}}"
+            alt="Profile Image"
+          />
+          </a>
+          <div class="home-profile ml-3 my-auto">
+            <p class="m-0 p-0"><small><strong>{{request.user.username}}</small></strong></p>
+            <p class="m-0 p-0"><small class="text-muted"><strong>{{request.user.username}}</strong></small></p>
+          </div>
+          <a href="#" class="nav-link ml-auto my-auto"><small><strong>Switch</strong></small></a>
+        </div>
+        <div class="suggestions d-flex my-3">
+          <p class="text-muted pt-2">Suggestions For You</p>
+          <a class="nav-link ml-auto" href="#"><small class="text-dark">See All</small></a>
+        </div>
+        <!-- Home Account Details End -->
+        
+        <!-- Suggestions Start -->
+        {% include "accounts/user_suggestions.html" %}
+        <!-- Suggestions End -->
+      </div>
+    </div>
+  </div>
+{% endblock %}
