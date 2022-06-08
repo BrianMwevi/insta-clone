@@ -64,3 +64,15 @@ def add_to_likes(request):
             post.likes.add(request.user.id)
             return HttpResponse({"post": post})
     return HttpResponseBadRequest()
+
+
+@login_required
+def remove_like(request):
+    if request.method == 'POST':
+        post_id = request.POST.get('id')
+        if post_id is not None:
+            post = Post.objects.get(id=post_id)
+            post.likes.remove(request.user.id)
+            post.save()
+            return HttpResponse({"post": post})
+    return HttpResponseBadRequest()
