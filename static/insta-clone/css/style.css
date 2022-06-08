@@ -1,0 +1,64 @@
+/* User Post Start */
+.account-profile-img, .feeds-profile-img, .nav-profile-img {
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.account-profile-img {
+  height: 3.5rem;
+  width: 3.5rem;
+}
+
+.feeds-profile-img {
+  height: 3rem;
+  width: 3rem;
+}
+
+.nav-profile-img {
+  height: 2rem;
+  width: 2rem;
+}
+
+.user-post-img {
+  /* background-size: cover; */
+  /* height: 2rem; */
+  width: 80%;
+  height: 80%;
+}
+
+.img-card {
+  position: relative;
+}
+.like-heart {
+  opacity: 0.8;
+  display: none;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  visibility: hidden;
+  transform: translate(-50%, -50%);
+  animation: animate-like .5s  1  alternate ease-in-out;
+  
+}
+
+.far, .fas, .fab {
+  cursor: pointer;
+  color:#000;
+  font-size: 1.2rem;
+}
+
+
+@keyframes animate-like {
+  0% {
+    font-size: 0;
+  }
+  50% {
+    font-size: 5.5rem;
+  }
+  100% {
+    font-size: 4.8rem;
+    visibility: visible;
+  }
+}
+/* User Post End */
+
