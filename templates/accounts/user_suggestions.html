@@ -1,0 +1,16 @@
+{% for account in users %}
+  <div class="d-flex my-1">
+    <a href="{% url 'accounts:profile' account.pk %}">
+      <img
+      class="feeds-profile-img mt-2"
+      src="{{account.profile.profile_pic.url}}"
+      alt="{{account.username}}"
+    />
+    </a>
+    <div class="home-profile ml-2 my-auto">
+      <p class="m-0 p-0"><small><strong>{{account.username}}</small></strong></p>
+      <p class="m-0 p-0"><small class="text-muted">Followed by pokoyoyo</small></p>
+    </div>
+    <a href="{% url 'post:follow' account.pk %}" class="nav-link ml-auto my-auto"><small><strong>Follow</strong></small></a>
+  </div>
+{% endfor %}
